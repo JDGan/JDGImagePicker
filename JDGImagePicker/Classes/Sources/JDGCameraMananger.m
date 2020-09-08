@@ -98,7 +98,9 @@ typedef BOOL(^JDGCheckIsInputDeviceSupportBlock)(AVCaptureDevice *device);
         [self.captureSession addInput:input];
     }
     if([self.delegate respondsToSelector:@selector(cameraMananger:didChangeInput:)]) {
-        [self.delegate cameraMananger:self didChangeInput:input];
+        dispatch_main_async_jdg_safe(^{
+            [self.delegate cameraMananger:self didChangeInput:input];
+        });
     }
 }
 
@@ -118,7 +120,9 @@ typedef BOOL(^JDGCheckIsInputDeviceSupportBlock)(AVCaptureDevice *device);
         default:
         {
             if ([self.delegate respondsToSelector:@selector(cameraManangerDeviceUnavailable:)]) {
-                [self.delegate cameraManangerDeviceUnavailable:self];
+                dispatch_main_async_jdg_safe(^{
+                    [self.delegate cameraManangerDeviceUnavailable:self];
+                });
             }
         }
             break;
@@ -131,7 +135,9 @@ typedef BOOL(^JDGCheckIsInputDeviceSupportBlock)(AVCaptureDevice *device);
             [self start];
         } else {
             if ([self.delegate respondsToSelector:@selector(cameraManangerDeviceUnavailable:)]) {
-                [self.delegate cameraManangerDeviceUnavailable:self];
+                dispatch_main_async_jdg_safe(^{
+                    [self.delegate cameraManangerDeviceUnavailable:self];
+                });
             }
         }
     }];
@@ -206,7 +212,9 @@ typedef BOOL(^JDGCheckIsInputDeviceSupportBlock)(AVCaptureDevice *device);
 - (void)captureOutput:(AVCapturePhotoOutput *)output didFinishProcessingPhoto:(AVCapturePhoto *)photo error:(NSError *)error {
     if (error) {
         if ([self.delegate respondsToSelector:@selector(cameraMananger:didCatchError:)]) {
-            [self.delegate cameraMananger:self didCatchError:error];
+            dispatch_main_async_jdg_safe(^{
+                [self.delegate cameraMananger:self didCatchError:error];
+            });
         }
         return;
     }
@@ -215,7 +223,9 @@ typedef BOOL(^JDGCheckIsInputDeviceSupportBlock)(AVCaptureDevice *device);
 
 - (void)savePhoto:(AVCapturePhoto *)photo {
     if([self.delegate respondsToSelector:@selector(cameraMananger:didSaveCapturePhoto:)]) {
-        [self.delegate cameraMananger:self didSaveCapturePhoto:photo];
+        dispatch_main_async_jdg_safe(^{
+            [self.delegate cameraMananger:self didSaveCapturePhoto:photo];
+        });
     }
 }
 
