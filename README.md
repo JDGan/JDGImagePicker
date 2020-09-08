@@ -1,6 +1,5 @@
 # JDGImagePicker
 
-[![CI Status](https://img.shields.io/travis/JDGan/JDGImagePicker.svg?style=flat)](https://travis-ci.org/JDGan/JDGImagePicker)
 [![Version](https://img.shields.io/cocoapods/v/JDGImagePicker.svg?style=flat)](https://cocoapods.org/pods/JDGImagePicker)
 [![License](https://img.shields.io/cocoapods/l/JDGImagePicker.svg?style=flat)](https://cocoapods.org/pods/JDGImagePicker)
 [![Platform](https://img.shields.io/cocoapods/p/JDGImagePicker.svg?style=flat)](https://cocoapods.org/pods/JDGImagePicker)
