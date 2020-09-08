@@ -7,9 +7,9 @@
 //
 
 #import "JDGViewController.h"
+#import <JDGImagePicker/JDGImagePicker.h>
 
-@interface JDGViewController ()
-
+@interface JDGViewController () <JDGImagePickerDelegate>
 @end
 
 @implementation JDGViewController
@@ -24,6 +24,15 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+- (IBAction)test:(id)sender {
+    
+    JDGImagePicker.sharedPicker.delegate = self;
+    [JDGImagePicker.sharedPicker presentFromViewController:self animated:YES completion:nil];
+}
+
+- (void)imagePicker:(JDGImagePicker *)imagePicker didFinishWithResultSelection:(JDGImageStack *)resultSelection {
+    NSLog(@"%@",resultSelection.selectedPhotos);
 }
 
 @end

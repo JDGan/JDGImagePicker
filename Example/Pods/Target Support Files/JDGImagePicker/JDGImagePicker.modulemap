@@ -1,0 +1,6 @@
+framework module JDGImagePicker {
+  umbrella header "JDGImagePicker-umbrella.h"
+
+  export *
+  module * { export * }
+}

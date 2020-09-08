@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'JDGImagePicker'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of JDGImagePicker.'
+  s.summary          = '基于Objective-C实现的相册相机选择器'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -18,25 +18,24 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+基于Objective-C实现的相册相机选择器
                        DESC
 
-  s.homepage         = 'https://github.com/甘邻龙01516778/JDGImagePicker'
+  s.homepage         = 'https://github.com/JDGan/JDGImagePicker.git'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { '甘邻龙01516778' => 'ganlinlong@haier.com' }
-  s.source           = { :git => 'https://github.com/甘邻龙01516778/JDGImagePicker.git', :tag => s.version.to_s }
+  s.author           = { 'JDGan' => 'jessiegan1987@163.com' }
+  s.source           = { :git => 'https://github.com/JDGan/JDGImagePicker.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '11.0'
 
-  s.source_files = 'JDGImagePicker/Classes/**/*'
+  s.source_files = 'JDGImagePicker/Classes/Sources/**/*.{h,m}'
   
-  # s.resource_bundles = {
-  #   'JDGImagePicker' => ['JDGImagePicker/Assets/*.png']
-  # }
-
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
+  s.resource_bundles = {
+    'JDGImagePickerResources' => ['JDGImagePicker/Assets/*.{storyboard,xcassets}']
+  }
+  
+  s.frameworks = 'UIKit', 'Photos', 'AVFoundation'
   # s.dependency 'AFNetworking', '~> 2.3'
 end
