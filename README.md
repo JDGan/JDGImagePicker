@@ -19,6 +19,21 @@ it, simply add the following line to your Podfile:
 pod 'JDGImagePicker'
 ```
 
+## Usage
+
+```Objective-C
+//...
+#import <JDGImagePicker/JDGImagePicker.h>
+//...
+@implementation XXXViewController
+//...
+- (void)actionToShowPicker {
+//...
+  [JDGImagePicker.sharedPicker presentFromViewController:self animated:YES completion:nil];
+}
+@end
+```
+
 ## Author
 
 Mr. Gan, jessiegan1987@163.com
