@@ -278,10 +278,6 @@
     }
 }
 
-- (BOOL)prefersStatusBarHidden {
-    return YES;
-}
-
 - (void)panToShowLibrary:(UIPanGestureRecognizer *)pan isBegan:(BOOL)isBegan {
     if (self.libraryVC == nil) { return; }
     if (isBegan) {
@@ -307,10 +303,8 @@
               || pan.state == UIGestureRecognizerStateCancelled){
         if (process > 0.5) {
             [self.libraryVC.pdInteractiveTransition finishInteractiveTransition];
-            NSLog(@"trigger finish");
         }else{
             [self.libraryVC.pdInteractiveTransition cancelInteractiveTransition];
-            NSLog(@"trigger cancel");
         }
         self.libraryVC.pdInteractiveTransition = nil;
     }
@@ -360,6 +354,10 @@
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskPortrait;
+}
+
+- (BOOL)prefersStatusBarHidden {
+    return YES;
 }
 
 @end

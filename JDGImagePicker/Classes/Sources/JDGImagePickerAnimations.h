@@ -7,10 +7,9 @@
 
 #import <UIKit/UIKit.h>
 #import <JDGImagePicker/JDGImageBaseViewController.h>
-NS_ASSUME_NONNULL_BEGIN
+#import <JDGImagePicker/JDGImagePickerDefines.h>
 
-typedef void(^JDGAnimationBlock)(UIView *fromView, UIView *toView);
-typedef void(^JDGAnimationCompleteBlock)(BOOL isFinished);
+NS_ASSUME_NONNULL_BEGIN
 
 /// 虚类,需要子类实现
 @interface JDGImagePickerAnimation : NSObject <UIViewControllerAnimatedTransitioning>

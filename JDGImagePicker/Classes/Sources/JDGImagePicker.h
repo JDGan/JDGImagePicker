@@ -8,10 +8,9 @@
 #import <Foundation/Foundation.h>
 #import <JDGImagePicker/JDGImagePickerConfiguration.h>
 #import <JDGImagePicker/JDGImageStack.h>
+#import <JDGImagePicker/JDGImagePickerDefines.h>
 
 NS_ASSUME_NONNULL_BEGIN
-
-typedef void(^JDGCompletionBlock)(void);
 
 @protocol JDGImagePickerDelegate;
 @interface JDGImagePicker : NSObject

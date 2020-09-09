@@ -46,7 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *errorPermissionDenied;
 @property (nonatomic, copy) NSString *errorImageNotFound;
 @property (nonatomic, copy) NSString *cameraUnavailableTitle;
-@property (nonatomic, copy) NSString *cameraUnavailableButtonTitle;
+@property (nonatomic, copy) NSString *goSettingsButtonTitle;
 @property (nonatomic, copy) NSString *cancelButtonTitle;
 @property (nonatomic, copy) NSString *doneButtonTitle;
 
@@ -61,13 +61,5 @@ NS_ASSUME_NONNULL_BEGIN
 #define JDG_IMAGE_BUNDLE_NAME @"JDGImagePickerResources.bundle"
 #define JDG_VIEW_BUNDLE_NAME @"JDGImagePickerResources.bundle"
 
-#ifndef dispatch_main_async_jdg_safe
-#define dispatch_main_async_jdg_safe(block)\
-    if (strcmp(dispatch_queue_get_label(DISPATCH_CURRENT_QUEUE_LABEL), dispatch_queue_get_label(dispatch_get_main_queue())) == 0) {\
-        block();\
-    } else {\
-        dispatch_async(dispatch_get_main_queue(), block);\
-    }
-#endif
 
 NS_ASSUME_NONNULL_END

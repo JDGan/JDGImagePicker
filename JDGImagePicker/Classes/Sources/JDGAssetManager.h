@@ -6,12 +6,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <JDGImagePicker/JDGImagePickerDefines.h>
 #import <Photos/Photos.h>
 
 NS_ASSUME_NONNULL_BEGIN
-typedef void(^JDGAssetResultBlock)(NSArray<PHAsset *> * _Nullable, NSError * _Nullable );
-typedef void(^JDGImagesResultBlock)(NSArray<UIImage *> * _Nullable, NSError * _Nullable );
-typedef void(^JDGImageResultBlock)(UIImage * _Nullable, NSError * _Nullable );
 
 @interface JDGAssetManager : NSObject
 
@@ -21,9 +19,11 @@ typedef void(^JDGImageResultBlock)(UIImage * _Nullable, NSError * _Nullable );
 
 + (void)destroyShared;
 
+- (void)setupIfNeeded:(JDGCompletionBlock)completion;
+
 - (nullable UIImage *)getImageForName:(NSString *)name;
 
-- (void)fetchAssetsCompletion:(JDGAssetResultBlock)completion;
+- (void)fetchAssetsCompletion:(JDGAssetResultBlock _Nullable)completion;
 
 - (void)asyncResolveAsset:(PHAsset *)asset
                      size:(CGSize)size

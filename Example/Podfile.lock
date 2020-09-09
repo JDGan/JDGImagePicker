@@ -1,5 +1,5 @@
 PODS:
-  - JDGImagePicker (0.1.0)
+  - JDGImagePicker (0.1.2)
 
 DEPENDENCIES:
   - JDGImagePicker (from `../`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  JDGImagePicker: f0a101da46d24fb4820d83e912d140a36d7cd2bf
+  JDGImagePicker: a66eb9c0d10f2171fc9d75d1e461d0f390fddebe
 
 PODFILE CHECKSUM: 9c45f8bc9adac0aae437f1ac43dffc7823e0850c
 

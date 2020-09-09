@@ -21,6 +21,8 @@
 #import "JDGImagePickerAnimations.h"
 #import "JDGImagePickerConfiguration.h"
 #import "JDGImagePickerController.h"
+#import "JDGImagePickerCustomViews.h"
+#import "JDGImagePickerDefines.h"
 #import "JDGImagePickerNavigationController.h"
 #import "JDGImagePickerPhoto.h"
 #import "JDGImagePreviewViewController.h"

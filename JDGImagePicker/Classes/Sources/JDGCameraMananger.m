@@ -8,8 +8,6 @@
 #import "JDGCameraMananger.h"
 #import "JDGImagePicker.h"
 
-typedef void(^JDGLockInputDeviceBlock)(AVCaptureDevice *device);
-typedef BOOL(^JDGCheckIsInputDeviceSupportBlock)(AVCaptureDevice *device);
 
 @interface JDGCameraMananger () <AVCapturePhotoCaptureDelegate>
 

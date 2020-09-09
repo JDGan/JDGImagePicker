@@ -19,6 +19,8 @@ UIGestureRecognizerDelegate
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
+@property (weak, nonatomic) IBOutlet UIView *unavailableView;
+
 @property (retain, nonatomic) NSMutableSet *tempAssets;
 @property (assign, nonatomic) BOOL isDetectingSelection;
 
@@ -49,6 +51,19 @@ UIGestureRecognizerDelegate
     UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(selectionPan:)];
     pan.delegate = self;
     [self.collectionView addGestureRecognizer:pan];
+    
+    [JDGAssetManager.shared setupIfNeeded:^(BOOL success, id  _Nullable data, NSError * _Nullable error) {
+        if (success) {
+            dispatch_main_async_jdg_safe(^{
+                self.unavailableView.hidden = YES;
+                [self.collectionView reloadData];
+            });
+        } else {
+            dispatch_main_async_jdg_safe(^{
+                self.unavailableView.hidden = NO;
+            });
+        }
+    }];
 }
 
 #pragma mark -UIGestureRecognizerDelegate

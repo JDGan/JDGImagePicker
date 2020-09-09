@@ -24,8 +24,6 @@
 @property (retain, nonatomic) UIView *cameraActionBoardView;
 
 @property (weak, nonatomic) IBOutlet UIView *cameraNotAvailableView;
-@property (weak, nonatomic) IBOutlet UILabel *unavailableLabel;
-@property (weak, nonatomic) IBOutlet UIButton *goSettingButton;
 
 @property (weak, nonatomic) IBOutlet UIButton *flashButton;
 @property (weak, nonatomic) IBOutlet UIButton *switchCameraButton;
@@ -46,11 +44,7 @@
     self.focusImageView.alpha = 0;
     self.focusImageView.backgroundColor = UIColor.clearColor;
     self.cameraNotAvailableView.hidden = YES;
-    
-    self.goSettingButton.layer.cornerRadius = 5;
-    self.goSettingButton.layer.borderWidth = 1;
-    self.goSettingButton.layer.borderColor = UIColor.whiteColor.CGColor;
-    self.goSettingButton.layer.maskedCorners = kCALayerMinXMinYCorner|kCALayerMaxXMinYCorner|kCALayerMinXMaxYCorner|kCALayerMaxXMaxYCorner;
+
     [self updateFlashButtonUI];
     
     self.cameraManager = [JDGCameraMananger new];
@@ -174,9 +168,6 @@
 
 #pragma mark - JDGCameraManangerDelegate
 - (void)cameraManangerDeviceUnavailable:(JDGCameraMananger *)manager {
-    JDGImagePickerConfiguration *config = JDGImagePicker.sharedPicker.configuration;
-    self.unavailableLabel.text = config.cameraUnavailableTitle;
-    [self.goSettingButton setTitle:config.cameraUnavailableButtonTitle forState:UIControlStateNormal];
     self.cameraNotAvailableView.hidden = NO;
 }
 

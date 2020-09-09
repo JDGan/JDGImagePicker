@@ -39,6 +39,33 @@ static id _sharedAssetManager = nil;
     return self;
 }
 
+- (void)setupIfNeeded:(JDGCompletionBlock)completion {
+    [self checkStatus:^(PHAuthorizationStatus status) {
+        if(status == PHAuthorizationStatusAuthorized) {
+            [self fetchAssetsCompletion:^(NSArray<PHAsset *> * _Nullable assets, NSError * _Nullable error) {
+                completion(YES, assets, error);
+            }];
+        } else {
+            completion(NO, nil, nil);
+        }
+    }];
+}
+
+- (void)checkStatus:(void(^)(PHAuthorizationStatus status))completion {
+    PHAuthorizationStatus currentStatus = PHPhotoLibrary.authorizationStatus;
+    if(currentStatus == PHAuthorizationStatusAuthorized) {
+        dispatch_main_async_jdg_safe(^{
+            completion(PHAuthorizationStatusAuthorized);
+        });
+        return;
+    }
+    [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+        dispatch_main_async_jdg_safe(^{
+            completion(status);
+        });
+    }];
+}
+
 - (nullable UIImage *)getImageForName:(NSString *)name {
     UITraitCollection *trait = [UITraitCollection traitCollectionWithDisplayScale:3];
     NSBundle *bundle = [NSBundle bundleForClass:self.class];
@@ -51,7 +78,11 @@ static id _sharedAssetManager = nil;
     JDGImagePickerConfiguration *config = [JDGImagePicker sharedPicker].configuration;
     if(PHPhotoLibrary.authorizationStatus != PHAuthorizationStatusAuthorized) {
         NSError *err = [NSError errorWithDomain:config.errorDomain code:400 userInfo:@{NSLocalizedDescriptionKey:config.errorPermissionDenied}];
-        completion(nil, err);
+        if (completion) {
+            dispatch_main_async_jdg_safe(^{
+                completion(@[], err);
+            });
+        }
         return;
     }
     
@@ -70,13 +101,17 @@ static id _sharedAssetManager = nil;
             }];
             [self.libraryAssets removeAllObjects];
             [self.libraryAssets addObjectsFromArray:assets];
-            dispatch_main_async_jdg_safe(^{
-                completion(assets, nil);
-            });
+            if (completion) {
+                dispatch_main_async_jdg_safe(^{
+                    completion(assets, nil);
+                });
+            }
         } else {
-            dispatch_main_async_jdg_safe(^{
-                completion(@[], nil);
-            });
+         if (completion) {
+                dispatch_main_async_jdg_safe(^{
+                    completion(@[], nil);
+                });
+            }
         }
     });
 }

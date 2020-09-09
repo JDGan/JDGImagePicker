@@ -301,10 +301,19 @@
                                     <outlet property="delegate" destination="3Lh-Ei-pV9" id="CJf-5v-tMj"/>
                                 </connections>
                             </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tIi-0V-zQe" customClass="JDGImagePickerPrivacyUnavailableView">
+                                <rect key="frame" x="87" y="382" width="240.5" height="132"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="132" id="8Hm-ng-KLH"/>
+                                    <constraint firstAttribute="width" constant="240.5" id="Gks-pH-cFN"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <constraints>
                             <constraint firstItem="WQ2-M2-zd7" firstAttribute="leading" secondItem="W3W-hZ-bMA" secondAttribute="leading" id="1xg-sb-MVj"/>
                             <constraint firstItem="WQ2-M2-zd7" firstAttribute="trailing" secondItem="W3W-hZ-bMA" secondAttribute="trailing" id="29P-3u-3z9"/>
+                            <constraint firstItem="tIi-0V-zQe" firstAttribute="centerY" secondItem="FkW-aT-dAm" secondAttribute="centerY" id="3Xi-mn-kaB"/>
+                            <constraint firstItem="tIi-0V-zQe" firstAttribute="centerX" secondItem="FkW-aT-dAm" secondAttribute="centerX" id="c0Y-T8-lOr"/>
                             <constraint firstItem="W3W-hZ-bMA" firstAttribute="bottom" secondItem="WQ2-M2-zd7" secondAttribute="bottom" id="i2G-g1-c20"/>
                             <constraint firstItem="WQ2-M2-zd7" firstAttribute="top" secondItem="W3W-hZ-bMA" secondAttribute="top" id="ydU-dN-Rvo"/>
                         </constraints>
@@ -313,6 +322,7 @@
                     <navigationItem key="navigationItem" id="wPP-1c-hqh"/>
                     <connections>
                         <outlet property="collectionView" destination="WQ2-M2-zd7" id="dSG-Iv-0hd"/>
+                        <outlet property="unavailableView" destination="tIi-0V-zQe" id="ehG-iZ-exK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pkJ-e9-Da5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -327,39 +337,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lZd-H2-izG">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lZd-H2-izG" customClass="JDGImagePickerPrivacyUnavailableView">
                                 <rect key="frame" x="87" y="203" width="240.5" height="132"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="phH-62-ygd">
-                                        <rect key="frame" x="20" y="24" width="200.5" height="84"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Camera is not available" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R7b-hF-s23">
-                                                <rect key="frame" x="0.0" y="0.0" width="200.5" height="24"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O1Y-lz-jJn">
-                                                <rect key="frame" x="48" y="48" width="104" height="36"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                <inset key="contentEdgeInsets" minX="10" minY="8" maxX="10" maxY="8"/>
-                                                <state key="normal" title="Go settings">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="goSettingsPressed:" destination="lfH-Gu-7JA" eventType="touchUpInside" id="tgc-kH-gy3"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
-                                </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="phH-62-ygd" secondAttribute="trailing" constant="20" id="QGF-g9-KHY"/>
-                                    <constraint firstItem="phH-62-ygd" firstAttribute="centerY" secondItem="lZd-H2-izG" secondAttribute="centerY" id="UFd-zw-71x"/>
-                                    <constraint firstItem="phH-62-ygd" firstAttribute="centerX" secondItem="lZd-H2-izG" secondAttribute="centerX" id="WxL-3a-pnS"/>
-                                    <constraint firstAttribute="bottom" secondItem="phH-62-ygd" secondAttribute="bottom" constant="24" id="iC5-29-4GS"/>
-                                    <constraint firstItem="phH-62-ygd" firstAttribute="top" secondItem="lZd-H2-izG" secondAttribute="top" constant="24" id="tar-Kv-Gzq"/>
-                                    <constraint firstItem="phH-62-ygd" firstAttribute="leading" secondItem="lZd-H2-izG" secondAttribute="leading" constant="20" id="wKs-EO-e9V"/>
+                                    <constraint firstAttribute="width" constant="240.5" id="2xs-fT-r6h"/>
+                                    <constraint firstAttribute="height" constant="132" id="lR2-El-JW0"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cXN-dk-kXb">
@@ -406,9 +388,7 @@
                         <outlet property="cameraNotAvailableView" destination="lZd-H2-izG" id="FGc-k4-Gfh"/>
                         <outlet property="flashButton" destination="vSr-WD-rac" id="r4K-RS-otO"/>
                         <outlet property="focusImageView" destination="Jmy-nO-Eu4" id="FrK-O2-fUc"/>
-                        <outlet property="goSettingButton" destination="O1Y-lz-jJn" id="jN7-g0-iSG"/>
                         <outlet property="switchCameraButton" destination="cXN-dk-kXb" id="Hax-9n-bhR"/>
-                        <outlet property="unavailableLabel" destination="R7b-hF-s23" id="IYk-Ki-dmX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o5N-NK-cfg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -499,8 +479,17 @@
                                     <constraint firstAttribute="width" constant="60" id="b7Q-OQ-eJ7"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ue4-Yw-5HH" customClass="JDGImagePickerPrivacyUnavailableView">
+                                <rect key="frame" x="87" y="24" width="240" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="I6E-yj-Mh8"/>
+                                    <constraint firstAttribute="width" constant="240" id="tO6-2z-1Qd"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="ue4-Yw-5HH" firstAttribute="centerX" secondItem="sx4-Hs-vcb" secondAttribute="centerX" id="4Yx-bP-jj8"/>
+                            <constraint firstItem="ue4-Yw-5HH" firstAttribute="top" secondItem="sx4-Hs-vcb" secondAttribute="top" constant="24" id="HmU-rg-SgQ"/>
                             <constraint firstItem="l26-aS-Yn6" firstAttribute="top" secondItem="sx4-Hs-vcb" secondAttribute="top" constant="7" id="ddn-eo-DBC"/>
                             <constraint firstItem="l26-aS-Yn6" firstAttribute="centerX" secondItem="sx4-Hs-vcb" secondAttribute="centerX" id="sw6-Lu-EYX"/>
                         </constraints>
@@ -509,6 +498,7 @@
                     <connections>
                         <outlet property="collectionView" destination="T5s-ch-reE" id="QnC-bx-cyb"/>
                         <outlet property="dragIndicatorView" destination="l26-aS-Yn6" id="7rK-7I-C6u"/>
+                        <outlet property="unavailableView" destination="ue4-Yw-5HH" id="z7R-x2-uog"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jku-SO-7IB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

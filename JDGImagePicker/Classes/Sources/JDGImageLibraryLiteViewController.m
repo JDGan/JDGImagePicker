@@ -40,7 +40,8 @@
 
 @property (weak, nonatomic) IBOutlet UIView *dragIndicatorView;
 
-@property (weak, nonatomic) IBOutlet UIView *noImageView;
+@property (weak, nonatomic) IBOutlet UIView *unavailableView;
+
 @end
 
 @implementation JDGImageLibraryLiteViewController
@@ -68,10 +69,17 @@
     self.dragIndicatorView.layer.cornerRadius = self.dragIndicatorView.frame.size.height/2;
     self.dragIndicatorView.layer.masksToBounds = YES;
     
-    [JDGAssetManager.shared fetchAssetsCompletion:^(NSArray<PHAsset *> * _Nullable arr, NSError * _Nullable error) {
-        dispatch_main_async_jdg_safe(^{
-            [self.collectionView reloadData];
-        });
+    [JDGAssetManager.shared setupIfNeeded:^(BOOL success, id  _Nullable data, NSError * _Nullable error) {
+        if (success) {
+            dispatch_main_async_jdg_safe(^{
+                self.unavailableView.hidden = YES;
+                [self.collectionView reloadData];
+            });
+        } else {
+            dispatch_main_async_jdg_safe(^{
+                self.unavailableView.hidden = NO;
+            });
+        }
     }];
 }
 
