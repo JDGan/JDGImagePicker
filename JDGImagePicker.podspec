@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'JDGImagePicker'
-  s.version          = '0.1.0'
+  s.version          = '0.1.1'
   s.summary          = '基于Objective-C实现的相册相机选择器'
 
 # This description is used to generate tags and improve search results.
