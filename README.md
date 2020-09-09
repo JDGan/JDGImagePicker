@@ -25,11 +25,18 @@ pod 'JDGImagePicker'
 //...
 #import <JDGImagePicker/JDGImagePicker.h>
 //...
+@interface XXXViewController() <JDGImagePickerDelegate>
+//...
 @implementation XXXViewController
 //...
 - (void)actionToShowPicker {
 //...
-  [JDGImagePicker.sharedPicker presentFromViewController:self animated:YES completion:nil];
+	JDGImagePicker *picker = JDGImagePicker.sharedPicker;
+	[picker presentFromViewController:self animated:YES completion:nil];
+}
+#pragma mark - JDGImagePickerDelegate
+- (void)imagePicker:(JDGImagePicker *)imagePicker didFinishWithResultSelection:(JDGImageStack *)resultSelection {
+	JDGImagePickerPhoto *photo = resultSelection.selectedPhotos.firstObject;
 }
 @end
 ```

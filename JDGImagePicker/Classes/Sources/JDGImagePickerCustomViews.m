@@ -22,7 +22,6 @@
 {
     self = [super initWithCoder:coder];
     if (self) {
-        NSLog(@"%@",NSStringFromSelector(_cmd));
         [self initialSubviews];
     }
     return self;
@@ -32,7 +31,6 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        NSLog(@"%@",NSStringFromSelector(_cmd));
         [self initialSubviews];
     }
     return self;

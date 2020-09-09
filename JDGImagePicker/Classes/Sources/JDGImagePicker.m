@@ -49,7 +49,7 @@ static id _instance = nil;
 
 - (void)dealloc
 {
-    NSLog(@"%@ dealloc", self);
+//    NSLog(@"%@ dealloc", self);
 }
 
 @end

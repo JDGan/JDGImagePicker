@@ -18,7 +18,7 @@
 
 - (void)dealloc
 {
-    NSLog(@"%@ dealloc", self);
+//    NSLog(@"%@ dealloc", self);
 }
 
 - (void)viewDidLoad {
