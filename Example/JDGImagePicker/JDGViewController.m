@@ -33,7 +33,7 @@
     config.doneButtonTitle = @"完成";
     config.cancelButtonTitle = @"取消";
     [picker presentFromViewController:self animated:YES completion:^{
-        
+        // complete animation
     }];
 }
 #pragma mark - JDGImagePickerDelegate
