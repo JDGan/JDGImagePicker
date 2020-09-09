@@ -95,7 +95,7 @@
     }
 }
 
-- (void)getImageCompleteInMainQueue:(JDGImageResultBlock)completion {
+- (void)getImageInMainQueueForQuality:(PHImageRequestOptionsDeliveryMode)mode completion:(JDGImageResultBlock)completion {
     JDGImagePickerConfiguration *config = JDGImagePicker.sharedPicker.configuration;
     __block NSError *error = nil;
     switch (self.type) {
@@ -107,7 +107,7 @@
                     completion(nil, error);
                 });
             } else {
-                [JDGAssetManager.shared asyncResolveAsset:self.asset size:config.imageSize deliveryMode:PHImageRequestOptionsDeliveryModeOpportunistic completion:^(NSArray<UIImage *> * _Nullable images, NSError * _Nullable error) {
+                [JDGAssetManager.shared asyncResolveAsset:self.asset size:config.imageSize deliveryMode:mode completion:^(NSArray<UIImage *> * _Nullable images, NSError * _Nullable error) {
                     dispatch_main_async_jdg_safe(^{
                         completion(images.firstObject, error);
                     });
@@ -157,5 +157,14 @@
             break;
     }
 }
+
+- (void)getThumbnailImageInMainQueueCompletion:(JDGImageResultBlock)completion {
+    [self getImageInMainQueueForQuality:PHImageRequestOptionsDeliveryModeFastFormat completion:completion];
+}
+
+- (void)getOriginImageInMainQueueCompletion:(JDGImageResultBlock)completion {
+    [self getImageInMainQueueForQuality:PHImageRequestOptionsDeliveryModeHighQualityFormat completion:completion];
+}
+
 
 @end

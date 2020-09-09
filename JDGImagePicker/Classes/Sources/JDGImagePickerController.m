@@ -162,7 +162,7 @@
         UIImageView *imageView = self.imageViewStacks[i];
         if (result.count > i) {
             JDGImagePickerPhoto *photo = result[i];
-            [photo getImageCompleteInMainQueue:^(UIImage * _Nullable image, NSError * _Nullable error) {
+            [photo getThumbnailImageInMainQueueCompletion:^(UIImage * _Nullable image, NSError * _Nullable error) {
                 if (error == nil) {
                     imageView.image = image;
                     imageView.hidden = NO;

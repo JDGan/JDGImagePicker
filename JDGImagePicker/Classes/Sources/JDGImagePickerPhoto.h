@@ -34,7 +34,9 @@ typedef enum : NSUInteger {
 
 + (instancetype)photoWithCapturePhoto:(AVCapturePhoto *)capturePhoto;
 
-- (void)getImageCompleteInMainQueue:(JDGImageResultBlock)completion;
+- (void)getThumbnailImageInMainQueueCompletion:(JDGImageResultBlock)completion;
+
+- (void)getOriginImageInMainQueueCompletion:(JDGImageResultBlock)completion;
 
 @end
 

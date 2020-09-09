@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-基于Objective-C实现的相册相机选择器
+基于Objective-C实现的相册相机选择器,支持相机和相册的同步选择
                        DESC
 
   s.homepage         = 'https://github.com/JDGan/JDGImagePicker.git'

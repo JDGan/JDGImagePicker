@@ -101,7 +101,7 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    JDGImagePickerPhoto *photo = [self itemForIndexPath:indexPath];
+//    JDGImagePickerPhoto *photo = [self itemForIndexPath:indexPath];
     
 }
 

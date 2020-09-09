@@ -33,10 +33,9 @@
     if(self.cellData == data) {return;}
     JDGImagePickerPhoto *photo = data;
     self.cellData = photo;
-    JDGImagePickerConfiguration *config = JDGImagePicker.sharedPicker.configuration;
-    [JDGAssetManager.shared asyncResolveAsset:photo.asset size:config.imageSize deliveryMode:PHImageRequestOptionsDeliveryModeFastFormat completion:^(NSArray<UIImage *> * _Nullable images, NSError * _Nullable error) {
+    [photo getThumbnailImageInMainQueueCompletion:^(UIImage * _Nullable image, NSError * _Nullable error) {
         dispatch_main_async_jdg_safe(^{
-            self.imageView.image = images.firstObject;
+            self.imageView.image = image;
         });
     }];
 }
