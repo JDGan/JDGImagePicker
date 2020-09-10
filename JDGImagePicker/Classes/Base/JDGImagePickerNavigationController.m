@@ -8,7 +8,6 @@
 #import "JDGImagePickerNavigationController.h"
 #import "JDGImagePickerAnimations.h"
 #import "JDGImageBaseViewController.h"
-#import "JDGImagePicker.h"
 
 @interface JDGImagePickerNavigationController () <UINavigationControllerDelegate>
 

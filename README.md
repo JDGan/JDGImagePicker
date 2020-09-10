@@ -24,7 +24,7 @@ pod 'JDGImagePicker'
 # 仅使用图片选择器的功能
 pod 'JDGImagePicker/ImagePicker'
 
-# 仅使用预览的功能
+# 仅使用预览的功能(开发中)
 pod 'JDGImagePicker/ImagePreviewer'
 ```
 
