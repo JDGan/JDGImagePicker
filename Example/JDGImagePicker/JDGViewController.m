@@ -9,7 +9,6 @@
 #import "JDGViewController.h"
 #import <JDGImagePicker/JDGImagePicker.h>
 #import <JDGImagePicker/JDGImagePreviewViewController.h>
-#import <QuickLook/QuickLook.h>
 
 @interface JDGViewController ()
 <JDGImagePickerDelegate>
