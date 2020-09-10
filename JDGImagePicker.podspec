@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'JDGImagePicker'
-  s.version          = '0.1.2'
+  s.version          = '0.1.3'
   s.summary          = '基于Objective-C实现的相册相机选择器'
 
 # This description is used to generate tags and improve search results.
@@ -30,12 +30,18 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = '11.0'
 
-  s.source_files = 'JDGImagePicker/Classes/Sources/**/*.{h,m}'
+  s.source_files = 'JDGImagePicker/Classes/Base/**/*.{h,m}'
   
-  s.resource_bundles = {
-    'JDGImagePickerResources' => ['JDGImagePicker/Assets/*.{storyboard,xcassets}']
-  }
+  s.subspec 'ImagePicker' do |sub|
+      sub.source_files = 'JDGImagePicker/Classes/ImagePicker/**/*.{h,m}'
+      s.resource_bundles = {
+        'JDGImagePickerResources' => ['JDGImagePicker/Assets/ImagePicker/*.{storyboard,xcassets}']
+      }
+  end
+  
+  s.subspec 'ImagePreviewer' do |sub|
+      sub.source_files = 'JDGImagePicker/Classes/ImagePreviewer/**/*.{h,m}'
+  end
   
   s.frameworks = 'UIKit', 'Photos', 'AVFoundation'
-  # s.dependency 'AFNetworking', '~> 2.3'
 end

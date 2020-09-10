@@ -1,6 +1,6 @@
 {
   "name": "JDGImagePicker",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "summary": "基于Objective-C实现的相册相机选择器",
   "description": "基于Objective-C实现的相册相机选择器,支持相机和相册的同步选择",
   "homepage": "https://github.com/JDGan/JDGImagePicker.git",
@@ -13,20 +13,30 @@
   },
   "source": {
     "git": "https://github.com/JDGan/JDGImagePicker.git",
-    "tag": "0.1.2"
+    "tag": "0.1.3"
   },
   "platforms": {
     "ios": "11.0"
   },
-  "source_files": "JDGImagePicker/Classes/Sources/**/*.{h,m}",
+  "source_files": "JDGImagePicker/Classes/Base/**/*.{h,m}",
   "resource_bundles": {
     "JDGImagePickerResources": [
-      "JDGImagePicker/Assets/*.{storyboard,xcassets}"
+      "JDGImagePicker/Assets/ImagePicker/*.{storyboard,xcassets}"
     ]
   },
   "frameworks": [
     "UIKit",
     "Photos",
     "AVFoundation"
+  ],
+  "subspecs": [
+    {
+      "name": "ImagePicker",
+      "source_files": "JDGImagePicker/Classes/ImagePicker/**/*.{h,m}"
+    },
+    {
+      "name": "ImagePreviewer",
+      "source_files": "JDGImagePicker/Classes/ImagePreviewer/**/*.{h,m}"
+    }
   ]
 }

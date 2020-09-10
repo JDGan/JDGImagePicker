@@ -6,7 +6,8 @@
 //
 
 #import "JDGImagePickerPhoto.h"
-#import "JDGImagePicker.h"
+#import "JDGImagePickerConfiguration.h"
+#import "JDGAssetManager.h"
 
 @interface JDGImagePickerPhoto ()
 
@@ -96,7 +97,7 @@
 }
 
 - (void)getImageInMainQueueForQuality:(PHImageRequestOptionsDeliveryMode)mode completion:(JDGImageResultBlock)completion {
-    JDGImagePickerConfiguration *config = JDGImagePicker.sharedPicker.configuration;
+    JDGImagePickerConfiguration *config = JDGImagePickerConfiguration.shared;
     __block NSError *error = nil;
     switch (self.type) {
         case JDGImagePickerPhotoTypePHAsset:

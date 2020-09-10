@@ -48,7 +48,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    JDGImagePickerConfiguration *config = JDGImagePicker.sharedPicker.configuration;
+    JDGImagePickerConfiguration *config = JDGImagePickerConfiguration.shared;
     self.collectionView.backgroundView = nil;
     self.collectionView.backgroundColor = UIColor.clearColor;
     self.collectionView.layer.anchorPoint = CGPointZero;
@@ -102,19 +102,19 @@
     if (![aCell isKindOfClass:[JDGImageLibrarySelectionCell class]]) {return;}
     JDGImageLibrarySelectionCell *cell = (JDGImageLibrarySelectionCell *)aCell;
     PHAsset *asset = JDGAssetManager.shared.libraryAssets[indexPath.row];
-    BOOL isSelected = [JDGImagePicker.sharedPicker.photoStack containsObject:asset forType:JDGImagePickerPhotoTypePHAsset];
+    BOOL isSelected = [JDGImagePicker.shared.photoStack containsObject:asset forType:JDGImagePickerPhotoTypePHAsset];
     [cell customizeWithData:asset isSelected:isSelected];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     JDGImageLibrarySelectionCell *cell = (JDGImageLibrarySelectionCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    JDGImagePickerPhoto *photo = [JDGImagePicker.sharedPicker.photoStack objectForData:cell.asset forType:JDGImagePickerPhotoTypePHAsset];
+    JDGImagePickerPhoto *photo = [JDGImagePicker.shared.photoStack objectForData:cell.asset forType:JDGImagePickerPhotoTypePHAsset];
     BOOL isSelected = photo != nil;
     if (!isSelected) {
         photo = [JDGImagePickerPhoto photoWithPHAsset:JDGAssetManager.shared.libraryAssets[indexPath.row]];
-        [JDGImagePicker.sharedPicker.photoStack push:photo];
+        [JDGImagePicker.shared.photoStack push:photo];
     } else {
-        [JDGImagePicker.sharedPicker.photoStack pop:photo];
+        [JDGImagePicker.shared.photoStack pop:photo];
     }
     
     [cell setSelected:!isSelected animated:YES];

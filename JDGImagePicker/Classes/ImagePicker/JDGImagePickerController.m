@@ -64,7 +64,7 @@
     
     self.libraryVC = [JDGImageLibraryViewController create];
     
-    JDGImagePickerConfiguration *config = [JDGImagePicker.sharedPicker configuration];
+    JDGImagePickerConfiguration *config = JDGImagePickerConfiguration.shared;
     self.bottomView.backgroundColor = config.maskViewBackgroundColor;
     self.extendBottomView.backgroundColor = self.bottomView.backgroundColor;
     self.libraryLiteVC.view.backgroundColor = self.bottomView.backgroundColor;
@@ -100,20 +100,20 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceDidChangeOrientation:) name:UIDeviceOrientationDidChangeNotification object:nil];
     
-    [JDGImagePicker.sharedPicker.photoStack addObserver:self forKeyPath:@"selectedPhotos" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
+    [JDGImagePicker.shared.photoStack addObserver:self forKeyPath:@"selectedPhotos" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
     
     [self addGestures];
 }
 
 - (void)updateCameraButtonWhileHighlighted:(BOOL)isHighlighted {
-    JDGImagePickerConfiguration *config = [JDGImagePicker.sharedPicker configuration];
+    JDGImagePickerConfiguration *config = JDGImagePickerConfiguration.shared;
     self.cameraActionButtonFrontView.backgroundColor = isHighlighted ? config.cameraButtonHighlightedColor : config.cameraButtonColor;
     self.cameraActionButton.layer.borderColor = self.cameraActionButtonFrontView.backgroundColor.CGColor;
 }
 
 - (void)updateCameraButtonTitle {
-    JDGImagePickerConfiguration *config = [JDGImagePicker.sharedPicker configuration];
-    NSUInteger selectedCount = JDGImagePicker.sharedPicker.photoStack.selectedPhotos.count;
+    JDGImagePickerConfiguration *config = JDGImagePickerConfiguration.shared;
+    NSUInteger selectedCount = JDGImagePicker.shared.photoStack.selectedPhotos.count;
     if(selectedCount > 1) {
         [self.cameraActionButton setTitle:[NSString stringWithFormat:@"%lu",(unsigned long)selectedCount] forState:UIControlStateNormal];
     } else {
@@ -144,18 +144,18 @@
 }
 
 - (IBAction)cancelPressed:(UIButton *)sender {
-    [JDGImagePicker.sharedPicker dismiss];
+    [JDGImagePicker.shared dismiss];
 }
 
 - (IBAction)imageStackButtonPressed:(UIButton *)sender {
-    if(JDGImagePicker.sharedPicker.photoStack.selectedPhotos.count <= 0) {return;}
+    if(JDGImagePicker.shared.photoStack.selectedPhotos.count <= 0) {return;}
     JDGImageSelectionViewController *previewVC = [JDGImageSelectionViewController create];
     [self.navigationController pushViewController:previewVC animated:YES];
 }
 
 - (void)updateImageStackUI {
-    JDGImagePickerConfiguration *config = JDGImagePicker.sharedPicker.configuration;
-    NSArray *currentAssets = JDGImagePicker.sharedPicker.photoStack.selectedPhotos;
+    JDGImagePickerConfiguration *config = JDGImagePickerConfiguration.shared;
+    NSArray *currentAssets = JDGImagePicker.shared.photoStack.selectedPhotos;
     NSUInteger length = MIN(config.imageStackCount, currentAssets.count);
     NSArray *result = [currentAssets subarrayWithRange:NSMakeRange(currentAssets.count-length, length)];
     for(NSUInteger i=0;i<self.imageViewStacks.count;i++) {
@@ -185,7 +185,7 @@
     CGAffineTransform transform = self.libraryLiteVC.collectionView.transform;
     UIEdgeInsets inset = self.libraryLiteVC.collectionView.contentInset;
     
-    JDGImagePickerConfiguration *config = JDGImagePicker.sharedPicker.configuration;
+    JDGImagePickerConfiguration *config = JDGImagePickerConfiguration.shared;
     if (height > config.libraryLiteHeightMax || !libraryInitialAnimation) {
         [self panToShowLibrary:ges isBegan:libraryInitialAnimation];
         if(libraryInitialAnimation) {
@@ -266,7 +266,7 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if (object == JDGImagePicker.sharedPicker.photoStack) {
+    if (object == JDGImagePicker.shared.photoStack) {
         if ([keyPath isEqualToString:@"selectedPhotos"]) {
             dispatch_main_async_jdg_safe(^{
                 [self updateImageStackUI];
@@ -283,7 +283,7 @@
     if (isBegan) {
         CGRect targetFrame = self.bottomBackgroundView.frame;
         self.libraryVC.fromFrame = targetFrame;
-        JDGImagePickerConfiguration *config = JDGImagePicker.sharedPicker.configuration;
+        JDGImagePickerConfiguration *config = JDGImagePickerConfiguration.shared;
         CGFloat h = config.libraryLiteHeightMin - config.libraryLiteHeaderHeight;
         self.libraryVC.itemScaledSide = h * self.libraryLiteVC.collectionView.transform.a;
     }

@@ -34,7 +34,7 @@ UIGestureRecognizerDelegate
 }
 
 - (CGFloat)itemSide {
-    JDGImagePickerConfiguration *config = JDGImagePicker.sharedPicker.configuration;
+    JDGImagePickerConfiguration *config = JDGImagePickerConfiguration.shared;
     CGFloat blank = config.libraryItemGap;
     CGFloat count = config.libraryItemMaxCountForLine;
     return floor((self.view.frame.size.width-(count+1)*blank)/count);
@@ -44,7 +44,7 @@ UIGestureRecognizerDelegate
     [super viewDidLoad];
     self.tempAssets = [NSMutableSet set];
     
-    JDGImagePickerConfiguration *config = JDGImagePicker.sharedPicker.configuration;
+    JDGImagePickerConfiguration *config = JDGImagePickerConfiguration.shared;
     self.view.backgroundColor = UIColor.clearColor;
     self.title = config.libraryViewTitle;
     
@@ -88,7 +88,7 @@ UIGestureRecognizerDelegate
                 self.collectionView.scrollEnabled = NO;
                 NSIndexPath *startIndexPath = [self.collectionView indexPathForItemAtPoint:poi];
                 PHAsset *asset = JDGAssetManager.shared.libraryAssets[startIndexPath.row];
-                JDGImagePickerPhoto *photo = [JDGImagePicker.sharedPicker.photoStack objectForData:asset forType:JDGImagePickerPhotoTypePHAsset];
+                JDGImagePickerPhoto *photo = [JDGImagePicker.shared.photoStack objectForData:asset forType:JDGImagePickerPhotoTypePHAsset];
                 if (photo == nil) {
                     _isToDelete = NO;
                 } else {
@@ -115,7 +115,7 @@ UIGestureRecognizerDelegate
                     [cell setSelected:!_isToDelete animated:NO];
                 } else {
                     [self.tempAssets removeObject:cell.asset];
-                    BOOL isSelected = [JDGImagePicker.sharedPicker.photoStack containsObject:cell.asset forType:JDGImagePickerPhotoTypePHAsset];
+                    BOOL isSelected = [JDGImagePicker.shared.photoStack containsObject:cell.asset forType:JDGImagePickerPhotoTypePHAsset];
                     [cell setSelected:isSelected animated:NO];
                 }
             }
@@ -143,21 +143,21 @@ UIGestureRecognizerDelegate
             NSMutableArray *tempPhotoArray = [NSMutableArray array];
             if(_isToDelete) {
                 for(PHAsset *asset in self.tempAssets) {
-                    JDGImagePickerPhoto *photo = [JDGImagePicker.sharedPicker.photoStack objectForData:asset forType:JDGImagePickerPhotoTypePHAsset];
+                    JDGImagePickerPhoto *photo = [JDGImagePicker.shared.photoStack objectForData:asset forType:JDGImagePickerPhotoTypePHAsset];
                     if(photo != nil) {
                         [tempPhotoArray addObject:photo];
                     }
                 }
-                [JDGImagePicker.sharedPicker.photoStack popPhotosInArray:tempPhotoArray];
+                [JDGImagePicker.shared.photoStack popPhotosInArray:tempPhotoArray];
             } else {
                 for(PHAsset *asset in self.tempAssets) {
-                    BOOL isExisted = [JDGImagePicker.sharedPicker.photoStack containsObject:asset forType:JDGImagePickerPhotoTypePHAsset];
+                    BOOL isExisted = [JDGImagePicker.shared.photoStack containsObject:asset forType:JDGImagePickerPhotoTypePHAsset];
                     if(!isExisted) {
                         JDGImagePickerPhoto *photo = [JDGImagePickerPhoto photoWithPHAsset:asset];
                         [tempPhotoArray addObject:photo];
                     }
                 }
-                [JDGImagePicker.sharedPicker.photoStack pushPhotosInArray:tempPhotoArray];
+                [JDGImagePicker.shared.photoStack pushPhotosInArray:tempPhotoArray];
             }
             [self.tempAssets removeAllObjects];
             self.isDetectingSelection = NO;
@@ -201,7 +201,7 @@ UIGestureRecognizerDelegate
 
 - (id<UIViewControllerAnimatedTransitioning>)navigationAnimationForOperation:(UINavigationControllerOperation)operation {
     if(CGRectIsNull(self.fromFrame)) {return nil;}
-    JDGImagePickerConfiguration *config = JDGImagePicker.sharedPicker.configuration;
+    JDGImagePickerConfiguration *config = JDGImagePickerConfiguration.shared;
     if (operation == UINavigationControllerOperationPush) {
         JDGImagePickerPushWithPopoverAnimation *ani = [JDGImagePickerPushWithPopoverAnimation animationForViewController:self];
         ani.willBeginAnimtaionBlock = ^(UIView * _Nonnull fromView, UIView * _Nonnull toView) {
@@ -264,7 +264,7 @@ UIGestureRecognizerDelegate
     if (![aCell isKindOfClass:[JDGImageLibrarySelectionCell class]]) {return;}
     JDGImageLibrarySelectionCell *cell = (JDGImageLibrarySelectionCell *)aCell;
     PHAsset *asset = JDGAssetManager.shared.libraryAssets[indexPath.row];
-    BOOL isSelected = [JDGImagePicker.sharedPicker.photoStack containsObject:asset forType:JDGImagePickerPhotoTypePHAsset];
+    BOOL isSelected = [JDGImagePicker.shared.photoStack containsObject:asset forType:JDGImagePickerPhotoTypePHAsset];
     [cell customizeWithData:asset isSelected:isSelected];
 }
 
@@ -274,30 +274,30 @@ UIGestureRecognizerDelegate
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-    JDGImagePickerConfiguration *config = JDGImagePicker.sharedPicker.configuration;
+    JDGImagePickerConfiguration *config = JDGImagePickerConfiguration.shared;
     return config.libraryItemGap;
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
-    JDGImagePickerConfiguration *config = JDGImagePicker.sharedPicker.configuration;
+    JDGImagePickerConfiguration *config = JDGImagePickerConfiguration.shared;
     return config.libraryItemGap;
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    JDGImagePickerConfiguration *config = JDGImagePicker.sharedPicker.configuration;
+    JDGImagePickerConfiguration *config = JDGImagePickerConfiguration.shared;
     CGFloat sideGap = config.libraryItemGap;
     return UIEdgeInsetsMake(sideGap, sideGap, sideGap, sideGap);
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     JDGImageLibrarySelectionCell *cell = (JDGImageLibrarySelectionCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    JDGImagePickerPhoto *photo = [JDGImagePicker.sharedPicker.photoStack objectForData:cell.asset forType:JDGImagePickerPhotoTypePHAsset];
+    JDGImagePickerPhoto *photo = [JDGImagePicker.shared.photoStack objectForData:cell.asset forType:JDGImagePickerPhotoTypePHAsset];
     BOOL isSelected = photo != nil;
     if (!isSelected) {
         photo = [JDGImagePickerPhoto photoWithPHAsset:JDGAssetManager.shared.libraryAssets[indexPath.row]];
-        [JDGImagePicker.sharedPicker.photoStack push:photo];
+        [JDGImagePicker.shared.photoStack push:photo];
     } else {
-        [JDGImagePicker.sharedPicker.photoStack pop:photo];
+        [JDGImagePicker.shared.photoStack pop:photo];
     }
     
     [cell setSelected:!isSelected animated:YES];

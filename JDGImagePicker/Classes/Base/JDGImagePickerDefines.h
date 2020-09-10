@@ -33,4 +33,21 @@ typedef void(^JDGAnimationCompleteBlock)(BOOL isFinished);
     }
 #endif
 
+@protocol JDGStoryBoardControllerProtocol <NSObject>
+/// 一定要在类中实现该方法,才能通过create创建控制器,默认使用ImagePicker中的storyboard
++ (UIStoryboard * _Nullable)getStoryboard;
+/// 使用create方法创建storyboard中的控制器
++ (_Nullable instancetype)create;
+
+@end
+
+/// 单例模式协议,必须实现单例及摧毁单例方法
+@protocol JDGSingletonProtocol <NSObject>
+/// 销毁创建的单例
++ (void)destroyShared;
+/// 访问单例
++ (instancetype _Nullable)shared;
+
+@end
+
 #endif /* JDGImagePickerDefines_h */

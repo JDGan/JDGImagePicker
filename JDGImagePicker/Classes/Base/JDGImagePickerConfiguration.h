@@ -7,10 +7,11 @@
 
 #import <Foundation/Foundation.h>
 #import <Photos/Photos.h>
+#import <JDGImagePicker/JDGImagePickerDefines.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface JDGImagePickerConfiguration : NSObject
+@interface JDGImagePickerConfiguration : NSObject <JDGSingletonProtocol>
 
 #pragma mark - UI定义
 @property (nonatomic, retain) UIColor *mainColor;
@@ -57,9 +58,5 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) CGAffineTransform rotationTransform;
 
 @end
-
-#define JDG_IMAGE_BUNDLE_NAME @"JDGImagePickerResources.bundle"
-#define JDG_VIEW_BUNDLE_NAME @"JDGImagePickerResources.bundle"
-
 
 NS_ASSUME_NONNULL_END

@@ -6,16 +6,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <JDGImagePicker/JDGImagePickerDefines.h>
+#import <JDGImagePicker/JDGImagePickerConfiguration.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface JDGImageBaseViewController : UIViewController
+@interface JDGImageBaseViewController : UIViewController <JDGStoryBoardControllerProtocol>
 
 @property (nonatomic, assign) BOOL hideNavigationBar;
 
 @property (nonatomic, retain) UIPercentDrivenInteractiveTransition * _Nullable pdInteractiveTransition;
-
-+ (nullable instancetype)create;
 
 - (id<UIViewControllerAnimatedTransitioning> _Nullable)navigationAnimationForOperation:(UINavigationControllerOperation)operation;
 

@@ -38,7 +38,7 @@
 
 - (void)initialSubviews {
     self.translatesAutoresizingMaskIntoConstraints = NO;
-    JDGImagePickerConfiguration *config = JDGImagePicker.sharedPicker.configuration;
+    JDGImagePickerConfiguration *config = JDGImagePickerConfiguration.shared;
     UILabel *label = [UILabel new];
     label.font = config.cameraButtonTitleFont;
     label.textColor = UIColor.whiteColor;

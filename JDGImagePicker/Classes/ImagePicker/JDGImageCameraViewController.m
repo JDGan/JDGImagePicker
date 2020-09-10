@@ -62,7 +62,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    JDGImagePickerConfiguration *config = JDGImagePicker.sharedPicker.configuration;
+    JDGImagePickerConfiguration *config = JDGImagePickerConfiguration.shared;
     if(config.allowAudioSession) {
         NSError *error = nil;
         [AVAudioSession.sharedInstance setActive:YES error:&error];
@@ -123,7 +123,7 @@
 }
 
 - (void)updateFlashButtonUI {
-    JDGImagePickerConfiguration *config = JDGImagePicker.sharedPicker.configuration;
+    JDGImagePickerConfiguration *config = JDGImagePickerConfiguration.shared;
     NSArray *titles = @[@"AUTO", @"ON", @"OFF"];
     NSArray *colors = @[config.flashAutoColor, config.flashOnColor, config.flashOffColor];
     NSString *cTitle = self.flashButton.currentTitle;
@@ -176,7 +176,7 @@
 }
 
 - (void)cameraMananger:(JDGCameraMananger *)manager didChangeInput:(AVCaptureDeviceInput *)input {
-    if(JDGImagePicker.sharedPicker.configuration.enableFlashMode && input.device.position == AVCaptureDevicePositionBack) {
+    if(JDGImagePickerConfiguration.shared.enableFlashMode && input.device.position == AVCaptureDevicePositionBack) {
         self.flashButton.hidden = !input.device.hasFlash;
     } else {
         self.flashButton.hidden = YES;
@@ -184,7 +184,7 @@
 }
 
 - (void)cameraMananger:(JDGCameraMananger *)manager didStartCaptureSession:(AVCaptureSession *)session {
-    JDGImagePickerConfiguration *config = JDGImagePicker.sharedPicker.configuration;
+    JDGImagePickerConfiguration *config = JDGImagePickerConfiguration.shared;
     AVCaptureVideoPreviewLayer *previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:session];
     previewLayer.backgroundColor = config.mainColor.CGColor;
     previewLayer.autoreverses = YES;
@@ -198,7 +198,7 @@
 - (void)cameraMananger:(JDGCameraMananger *)manager didSaveCapturePhoto:(AVCapturePhoto *)avPhoto {
     // 得到照片
     JDGImagePickerPhoto *photo = [JDGImagePickerPhoto photoWithCapturePhoto:avPhoto];
-    [JDGImagePicker.sharedPicker.photoStack push:photo];
+    [JDGImagePicker.shared.photoStack push:photo];
 }
 
 - (void)rotateUIForOrientation:(UIDeviceOrientation)orientation {

@@ -6,7 +6,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <JDGImagePicker/JDGAssetManager.h>
+#import <JDGImagePicker/JDGImagePickerDefines.h>
+#import <AVFoundation/AVFoundation.h>
 NS_ASSUME_NONNULL_BEGIN
 
 typedef enum : NSUInteger {

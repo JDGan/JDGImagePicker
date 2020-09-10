@@ -14,7 +14,7 @@
 static id _instance = nil;
 @implementation JDGImagePickerConfiguration
 
-+ (instancetype)defaultConfiguration {
++ (instancetype)shared {
     @synchronized (self) {
         if(_instance == nil){
             _instance = [[self alloc] init];
@@ -23,7 +23,7 @@ static id _instance = nil;
     return _instance;
 }
 
-+ (void)destroyDefaultConfiguration {
++ (void)destroyShared {
     _instance = nil;
 }
 

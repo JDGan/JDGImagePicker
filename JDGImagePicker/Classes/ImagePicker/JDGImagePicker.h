@@ -13,17 +13,11 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol JDGImagePickerDelegate;
-@interface JDGImagePicker : NSObject
+@interface JDGImagePicker : NSObject <JDGSingletonProtocol>
 
 @property(nonatomic, weak) id <JDGImagePickerDelegate> delegate;
 
-@property(nonatomic, retain) JDGImagePickerConfiguration *configuration;
-
 @property(nonatomic, retain, readonly) JDGImageStack *photoStack;
-
-+ (instancetype)sharedPicker;
-
-+ (void)destroyShared;
 
 @end
 

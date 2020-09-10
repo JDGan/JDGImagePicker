@@ -6,8 +6,9 @@
 //
 
 #import "JDGImageBaseViewController.h"
-#import "JDGImagePickerConfiguration.h"
-#import "JDGImagePicker.h"
+#import "JDGImagePickerDefines.h"
+//#import "JDGImagePickerConfiguration.h"
+//#import "JDGImagePicker.h"
 
 @interface JDGImageBaseViewController ()
 
@@ -15,11 +16,15 @@
 
 @implementation JDGImageBaseViewController
 
-+ (instancetype)create {
++ (UIStoryboard *)getStoryboard {
     NSBundle *bundle = [NSBundle bundleForClass:self.class];
-    NSString *resourcePath = [bundle.resourcePath stringByAppendingPathComponent:JDG_VIEW_BUNDLE_NAME];
+    NSString *resourcePath = [bundle.resourcePath stringByAppendingPathComponent:@"JDGImagePickerResources.bundle"];
     NSBundle *resourceBundle = [NSBundle bundleWithPath:resourcePath];
-    UIStoryboard *s = [UIStoryboard storyboardWithName:@"JDGImagePicker" bundle:resourceBundle];
+    return [UIStoryboard storyboardWithName:@"JDGImagePicker" bundle:resourceBundle];
+}
+
++ (instancetype)create {
+    UIStoryboard *s = [self getStoryboard];
     id vc = [s instantiateViewControllerWithIdentifier:NSStringFromClass(self)];
     if ([vc isKindOfClass:self]) {
         return vc;
@@ -32,9 +37,5 @@
     return nil;
 }
 
-- (void)dealloc
-{
-//    NSLog(@"%@ dealloc", self);
-}
 
 @end

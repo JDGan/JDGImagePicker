@@ -11,13 +11,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface JDGAssetManager : NSObject
+@interface JDGAssetManager : NSObject <JDGSingletonProtocol>
 
 @property (nonatomic, retain, readonly) NSMutableArray<PHAsset *> *libraryAssets;
-
-+ (instancetype)shared;
-
-+ (void)destroyShared;
 
 - (void)setupIfNeeded:(JDGCompletionBlock)completion;
 

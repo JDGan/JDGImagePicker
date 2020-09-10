@@ -18,7 +18,7 @@
 
 static id _instance = nil;
 @implementation JDGImagePicker
-+ (instancetype)sharedPicker {
++ (instancetype)shared {
     @synchronized (self) {
         if(_instance == nil){
             _instance = [[self alloc] init];
@@ -40,13 +40,6 @@ static id _instance = nil;
     return self;
 }
 
-- (JDGImagePickerConfiguration *)configuration {
-    if(_configuration == nil) {
-        _configuration = [JDGImagePickerConfiguration new];
-    }
-    return _configuration;
-}
-
 - (void)dealloc
 {
 //    NSLog(@"%@ dealloc", self);
@@ -57,16 +50,8 @@ static id _instance = nil;
 
 @implementation JDGImagePicker (UI)
 
-- (UIStoryboard *)storyboardForName:(NSString *)name {
-    NSBundle *bundle = [NSBundle bundleForClass:self.class];
-    NSString *resourcePath = [bundle.resourcePath stringByAppendingPathComponent:JDG_VIEW_BUNDLE_NAME];
-    NSBundle *resourceBundle = [NSBundle bundleWithPath:resourcePath];
-    return [UIStoryboard storyboardWithName:name bundle:resourceBundle];
-}
-
 - (void)presentFromViewController:(UIViewController *)viewCtrl animated:(BOOL)flag completion:(void (^)(void))completion {
-    UIStoryboard *s = [self storyboardForName:@"JDGImagePicker"];
-    self.navigationController = [s instantiateViewControllerWithIdentifier:NSStringFromClass([JDGImagePickerNavigationController class])];
+    self.navigationController = [JDGImagePickerNavigationController create];
     self.navigationController.modalPresentationStyle = UIModalPresentationCurrentContext;
     [viewCtrl presentViewController:self.navigationController animated:flag completion:completion];
 }

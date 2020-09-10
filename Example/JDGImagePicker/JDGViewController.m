@@ -26,9 +26,9 @@
     // Dispose of any resources that can be recreated.
 }
 - (IBAction)test:(id)sender {
-    JDGImagePicker *picker = JDGImagePicker.sharedPicker;
+    JDGImagePicker *picker = JDGImagePicker.shared;
     picker.delegate = self;
-    JDGImagePickerConfiguration *config = JDGImagePicker.sharedPicker.configuration;
+    JDGImagePickerConfiguration *config = JDGImagePickerConfiguration.shared;
     config.imageSize = UIScreen.mainScreen.bounds.size;// or any other sizes
     config.doneButtonTitle = @"完成";
     config.cancelButtonTitle = @"取消";
@@ -48,11 +48,13 @@
     }];
     // destroy Shared instance if you need
     [JDGImagePicker destroyShared];
+    [JDGImagePickerConfiguration destroyShared];
 }
 
 - (void)imagePickerDidCancel:(JDGImagePicker *)imagePicker {
     // destroy Shared instance if you need
     [JDGImagePicker destroyShared];
+    [JDGImagePickerConfiguration destroyShared];
 }
 
 @end

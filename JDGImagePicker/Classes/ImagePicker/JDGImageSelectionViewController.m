@@ -23,7 +23,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    JDGImagePickerConfiguration *config = JDGImagePicker.sharedPicker.configuration;
+    JDGImagePickerConfiguration *config = JDGImagePickerConfiguration.shared;
     self.title = config.selectedViewTitle;
     
     UILongPressGestureRecognizer *editLongPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressedCollectionViewItem:)];
@@ -58,13 +58,13 @@
 }
 
 - (JDGImagePickerPhoto *)itemForIndexPath:(NSIndexPath *)indexPath {
-    NSUInteger count = JDGImagePicker.sharedPicker.photoStack.selectedPhotos.count;
-    return JDGImagePicker.sharedPicker.photoStack.selectedPhotos[count - indexPath.row - 1];
+    NSUInteger count = JDGImagePicker.shared.photoStack.selectedPhotos.count;
+    return JDGImagePicker.shared.photoStack.selectedPhotos[count - indexPath.row - 1];
 }
 
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return JDGImagePicker.sharedPicker.photoStack.selectedPhotos.count;
+    return JDGImagePicker.shared.photoStack.selectedPhotos.count;
 }
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -85,7 +85,7 @@
             [alert dismissViewControllerAnimated:YES completion:^{
                 dispatch_main_async_jdg_safe(^{
                     [collectionView performBatchUpdates:^{
-                        [JDGImagePicker.sharedPicker.photoStack pop:data];
+                        [JDGImagePicker.shared.photoStack pop:data];
                         [collectionView deleteItemsAtIndexPaths:@[indexPath]];
                     } completion:^(BOOL finished) {
                         [collectionView reloadData];
@@ -108,7 +108,7 @@
 - (void)collectionView:(UICollectionView *)collectionView moveItemAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
     JDGImagePickerPhoto *sourcePhoto = [self itemForIndexPath:sourceIndexPath];
     JDGImagePickerPhoto *destinationPhoto = [self itemForIndexPath:destinationIndexPath];
-    [JDGImagePicker.sharedPicker.photoStack insertItem:sourcePhoto beforeDestination:destinationPhoto];
+    [JDGImagePicker.shared.photoStack insertItem:sourcePhoto beforeDestination:destinationPhoto];
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView canMoveItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -121,18 +121,18 @@
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    JDGImagePickerConfiguration *config = JDGImagePicker.sharedPicker.configuration;
+    JDGImagePickerConfiguration *config = JDGImagePickerConfiguration.shared;
     CGFloat sideGap = config.libraryItemGap;
     return UIEdgeInsetsMake(sideGap, sideGap, sideGap, sideGap);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-    JDGImagePickerConfiguration *config = JDGImagePicker.sharedPicker.configuration;
+    JDGImagePickerConfiguration *config = JDGImagePickerConfiguration.shared;
     return config.libraryItemGap;
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
-    JDGImagePickerConfiguration *config = JDGImagePicker.sharedPicker.configuration;
+    JDGImagePickerConfiguration *config = JDGImagePickerConfiguration.shared;
     return config.libraryItemGap;
 }
 

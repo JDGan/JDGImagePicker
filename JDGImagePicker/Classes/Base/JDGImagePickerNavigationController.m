@@ -63,4 +63,21 @@
     return navigationController.topViewController.supportedInterfaceOrientations;
 }
 
++ (UIStoryboard *)getStoryboard {
+    NSBundle *bundle = [NSBundle bundleForClass:self.class];
+    NSString *resourcePath = [bundle.resourcePath stringByAppendingPathComponent:@"JDGImagePickerResources.bundle"];
+    NSBundle *resourceBundle = [NSBundle bundleWithPath:resourcePath];
+    return [UIStoryboard storyboardWithName:@"JDGImagePicker" bundle:resourceBundle];
+}
+
++ (instancetype)create {
+    UIStoryboard *s = [self getStoryboard];
+    id vc = [s instantiateViewControllerWithIdentifier:NSStringFromClass(self)];
+    if ([vc isKindOfClass:self]) {
+        return vc;
+    } else {
+        return nil;
+    }
+}
+
 @end

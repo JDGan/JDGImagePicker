@@ -6,7 +6,6 @@
 //
 
 #import "JDGImagePreviewViewController.h"
-#import "JDGImagePicker.h"
 
 @interface JDGImagePreviewViewController () 
 
@@ -16,7 +15,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    JDGImagePickerConfiguration *config = JDGImagePicker.sharedPicker.configuration;
+    JDGImagePickerConfiguration *config = JDGImagePickerConfiguration.shared;
     self.title = config.previewViewTitle;
 }
 

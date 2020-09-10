@@ -6,7 +6,7 @@
 //
 
 #import "JDGAssetManager.h"
-#import "JDGImagePicker.h"
+#import "JDGImagePickerConfiguration.h"
 
 @interface JDGAssetManager()
 
@@ -69,13 +69,13 @@ static id _sharedAssetManager = nil;
 - (nullable UIImage *)getImageForName:(NSString *)name {
     UITraitCollection *trait = [UITraitCollection traitCollectionWithDisplayScale:3];
     NSBundle *bundle = [NSBundle bundleForClass:self.class];
-    NSString *resourcePath = [bundle.resourcePath stringByAppendingPathComponent:JDG_IMAGE_BUNDLE_NAME];
+    NSString *resourcePath = [bundle.resourcePath stringByAppendingPathComponent:@"JDGImagePickerResources.bundle"];
     NSBundle *resourceBundle = [NSBundle bundleWithPath:resourcePath];
     return [UIImage imageNamed:name inBundle:resourceBundle compatibleWithTraitCollection:trait];
 }
 
 - (void)fetchAssetsCompletion:(JDGAssetResultBlock)completion {
-    JDGImagePickerConfiguration *config = [JDGImagePicker sharedPicker].configuration;
+    JDGImagePickerConfiguration *config = JDGImagePickerConfiguration.shared;
     if(PHPhotoLibrary.authorizationStatus != PHAuthorizationStatusAuthorized) {
         NSError *err = [NSError errorWithDomain:config.errorDomain code:400 userInfo:@{NSLocalizedDescriptionKey:config.errorPermissionDenied}];
         if (completion) {
@@ -130,7 +130,7 @@ static id _sharedAssetManager = nil;
         if (result) {
             completion(@[result], nil);
         } else {
-            JDGImagePickerConfiguration *config = [JDGImagePicker sharedPicker].configuration;
+            JDGImagePickerConfiguration *config = JDGImagePickerConfiguration.shared;
             NSError *err = [NSError errorWithDomain:config.errorDomain code:404 userInfo:@{NSLocalizedDescriptionKey:config.errorPermissionDenied}];
             completion(nil,err);
         }
@@ -139,7 +139,7 @@ static id _sharedAssetManager = nil;
 
 - (NSArray<UIImage *> *)resolveAssets:(NSArray<PHAsset *> *)assets
 {
-    JDGImagePickerConfiguration *config = [JDGImagePicker sharedPicker].configuration;
+    JDGImagePickerConfiguration *config = JDGImagePickerConfiguration.shared;
     PHImageManager *imgManager = PHImageManager.defaultManager;
     PHImageRequestOptions *options = [PHImageRequestOptions new];
     options.deliveryMode = config.imageDeliveryMode;

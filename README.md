@@ -10,13 +10,22 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ## Requirements
 
+iOS : 11.0以上,仅支持iPhone
+
 ## Installation
 
 JDGImagePicker is available through [CocoaPods](https://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
+# 使用全部完整功能
 pod 'JDGImagePicker'
+
+# 仅使用图片选择器的功能
+pod 'JDGImagePicker/ImagePicker'
+
+# 仅使用预览的功能
+pod 'JDGImagePicker/ImagePreviewer'
 ```
 
 ## Usage
@@ -31,9 +40,9 @@ pod 'JDGImagePicker'
 //...
 - (void)actionToShowPicker {
 //...
-    JDGImagePicker *picker = JDGImagePicker.sharedPicker;
+    JDGImagePicker *picker = JDGImagePicker.shared;
     picker.delegate = self;
-    JDGImagePickerConfiguration *config = JDGImagePicker.sharedPicker.configuration;
+    JDGImagePickerConfiguration *config = JDGImagePickerConfiguration.shared;
     config.imageSize = UIScreen.mainScreen.bounds.size;// or any other sizes
     config.doneButtonTitle = @"完成";
     config.cancelButtonTitle = @"取消";
@@ -53,11 +62,13 @@ pod 'JDGImagePicker'
     }];
     // destroy Shared instance if you need
     [JDGImagePicker destroyShared];
+    [JDGImagePickerConfiguration destroyShared];
 }
 
 - (void)imagePickerDidCancel:(JDGImagePicker *)imagePicker {
     // destroy Shared instance if you need
     [JDGImagePicker destroyShared];
+    [JDGImagePickerConfiguration destroyShared];
 }
 @end
 ```

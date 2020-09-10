@@ -47,7 +47,7 @@
 }
 
 + (CGSize)getItemSize {
-    JDGImagePickerConfiguration *config = JDGImagePicker.sharedPicker.configuration;
+    JDGImagePickerConfiguration *config = JDGImagePickerConfiguration.shared;
     CGFloat blank = config.libraryItemGap;
     CGFloat count = config.libraryItemMaxCountForLine;
     CGFloat width = floor((UIScreen.mainScreen.bounds.size.width-(count+1)*blank)/count);
