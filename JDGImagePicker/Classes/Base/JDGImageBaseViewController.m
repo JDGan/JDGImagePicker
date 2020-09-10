@@ -6,9 +6,6 @@
 //
 
 #import "JDGImageBaseViewController.h"
-#import "JDGImagePickerDefines.h"
-//#import "JDGImagePickerConfiguration.h"
-//#import "JDGImagePicker.h"
 
 @interface JDGImageBaseViewController ()
 
