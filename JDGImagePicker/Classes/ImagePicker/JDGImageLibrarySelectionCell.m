@@ -37,9 +37,9 @@
 - (void)customizeWithData:(PHAsset *)asset isSelected:(BOOL)isSelected {
     self.asset = asset;
     JDGImagePickerConfiguration *config = JDGImagePickerConfiguration.shared;
-    [JDGAssetManager.shared asyncResolveAsset:asset size:config.imageSize deliveryMode:PHImageRequestOptionsDeliveryModeFastFormat completion:^(NSArray<UIImage *> * _Nullable images, NSError * _Nullable error) {
+    [JDGAssetManager.shared asyncResolveAsset:asset size:config.imageSize deliveryMode:PHImageRequestOptionsDeliveryModeFastFormat completion:^(UIImage * _Nullable image, NSDictionary * _Nullable info, NSError * _Nullable error) {
         dispatch_main_async_jdg_safe(^{
-            self.imageView.image = images.firstObject;
+            self.imageView.image = image;
         });
     }];
     [self setSelected:isSelected animated:NO];

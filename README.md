@@ -30,6 +30,13 @@ pod 'JDGImagePicker/ImagePreviewer'
 
 ## Usage
 
+首先在InfoPlist中添加权限描述:
+
+NSCameraUsageDescription -> Privacy - Photo Library Usage Description
+NSPhotoLibraryUsageDescription -> Privacy - Camera Usage Description
+
+然后按下面的逻辑使用代码
+
 ```Objective-C
 //...
 #import <JDGImagePicker/JDGImagePicker.h>
@@ -75,7 +82,7 @@ pod 'JDGImagePicker/ImagePreviewer'
 
 ## Author
 
-Mr. Gan, jessiegan1987@163.com
+JDGan, jessiegan1987@163.com
 
 ## License
 

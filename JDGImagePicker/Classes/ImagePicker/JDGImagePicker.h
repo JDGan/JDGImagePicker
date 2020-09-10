@@ -19,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic, retain, readonly) JDGImageStack *photoStack;
 
+@property(nonatomic, copy) _Nullable JDGImageShouldShowPreviewerBlock previewerBlock;
+
 @end
 
 @interface JDGImagePicker (UI)

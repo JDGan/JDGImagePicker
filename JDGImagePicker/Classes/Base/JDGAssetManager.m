@@ -119,22 +119,53 @@ static id _sharedAssetManager = nil;
 - (void)asyncResolveAsset:(PHAsset *)asset
                      size:(CGSize)size
              deliveryMode:(PHImageRequestOptionsDeliveryMode)mode
-               completion:(JDGImagesResultBlock)completion {
+               completion:(JDGImageResultBlock)completion {
     PHImageManager *imgManager = PHImageManager.defaultManager;
     PHImageRequestOptions *options = [PHImageRequestOptions new];
     options.deliveryMode = mode;
     options.networkAccessAllowed = YES;
     options.synchronous = NO;
-
     [imgManager requestImageForAsset:asset targetSize:size contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
         if (result) {
-            completion(@[result], nil);
+            completion(result, info, nil);
         } else {
             JDGImagePickerConfiguration *config = JDGImagePickerConfiguration.shared;
             NSError *err = [NSError errorWithDomain:config.errorDomain code:404 userInfo:@{NSLocalizedDescriptionKey:config.errorPermissionDenied}];
-            completion(nil,err);
+            completion(nil, nil, err);
         }
     }];
+}
+
+- (void)asyncDetailResolveAsset:(PHAsset *)asset
+                           size:(CGSize)size
+                     completion:(JDGImageResultBlock)completion {
+    PHImageManager *imgManager = PHImageManager.defaultManager;
+    PHImageRequestOptions *options = [PHImageRequestOptions new];
+    options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
+    options.networkAccessAllowed = YES;
+    options.synchronous = NO;
+    
+    if(@available(iOS 13.0, *)) {
+        [imgManager requestImageDataAndOrientationForAsset:asset options:options resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, CGImagePropertyOrientation orientation, NSDictionary * _Nullable info) {
+            if (imageData) {
+                completion([UIImage imageWithData:imageData], info, nil);
+            } else {
+                JDGImagePickerConfiguration *config = JDGImagePickerConfiguration.shared;
+                NSError *err = [NSError errorWithDomain:config.errorDomain code:404 userInfo:@{NSLocalizedDescriptionKey:config.errorPermissionDenied}];
+                completion(nil, nil, err);
+            }
+        }];
+    } else {
+        [imgManager requestImageDataForAsset:asset options:options resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
+            if (imageData) {
+                completion([UIImage imageWithData:imageData], info, nil);
+            } else {
+                JDGImagePickerConfiguration *config = JDGImagePickerConfiguration.shared;
+                NSError *err = [NSError errorWithDomain:config.errorDomain code:404 userInfo:@{NSLocalizedDescriptionKey:config.errorPermissionDenied}];
+                completion(nil, nil, err);
+            }
+        }];
+    }
 }
 
 - (NSArray<UIImage *> *)resolveAssets:(NSArray<PHAsset *> *)assets

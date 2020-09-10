@@ -33,7 +33,7 @@
     if(self.cellData == data) {return;}
     JDGImagePickerPhoto *photo = data;
     self.cellData = photo;
-    [photo getThumbnailImageInMainQueueCompletion:^(UIImage * _Nullable image, NSError * _Nullable error) {
+    [photo getThumbnailImageInMainQueueCompletion:^(UIImage * _Nullable image, NSDictionary * _Nullable info, NSError * _Nullable error) {
         dispatch_main_async_jdg_safe(^{
             self.imageView.image = image;
         });

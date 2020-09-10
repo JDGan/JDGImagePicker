@@ -39,6 +39,8 @@ typedef enum : NSUInteger {
 
 - (void)getOriginImageInMainQueueCompletion:(JDGImageResultBlock)completion;
 
+- (NSURL * _Nullable)localPreviewURL;
+
 @end
 
 NS_ASSUME_NONNULL_END

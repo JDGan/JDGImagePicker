@@ -81,13 +81,27 @@
     }
 }
 
-- (void)saveToDocument:(NSData *)imageData {
+- (NSString *)filePathInSandBoxForIdentifier:(NSString * _Nullable)identifier {
     static int index = 0;
-    NSDate *now = [NSDate date];
-    NSDateFormatter *f = [NSDateFormatter new];
-    f.dateFormat = @"yyyyMMddHHmmss";
-    NSString *fileName = [NSString stringWithFormat:@"IMG_%@%d.png",[f stringFromDate:now],index++];
-    NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:fileName];
+    NSString *fileName;
+    if (identifier) {
+        NSString *name = [identifier stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
+        fileName = [NSString stringWithFormat:@"IMG_%@.png",name];
+    } else {
+        NSDate *now = [NSDate date];
+        NSDateFormatter *f = [NSDateFormatter new];
+        f.dateFormat = @"yyyyMMddHHmmss";
+        fileName = [NSString stringWithFormat:@"IMG_%@%d.png",[f stringFromDate:now],index++];
+    }
+    return [NSTemporaryDirectory() stringByAppendingPathComponent:fileName];
+}
+
+- (void)saveToDocument:(NSData *)imageData {
+    [self saveToDocument:imageData identifier:nil];
+}
+
+- (void)saveToDocument:(NSData *)imageData identifier:(NSString * _Nullable)identifier {
+    NSString *path = [self filePathInSandBoxForIdentifier:identifier];
     if([imageData writeToFile:path atomically:YES]) {
         self.type = JDGImagePickerPhotoTypeLocalFile;
         self.localPath = path;
@@ -105,12 +119,12 @@
             if (self.asset == nil) {
                 dispatch_main_async_jdg_safe(^{
                     error = [NSError errorWithDomain:config.errorDomain code:404 userInfo:@{NSLocalizedDescriptionKey:config.errorImageNotFound}];
-                    completion(nil, error);
+                    completion(nil, nil, error);
                 });
             } else {
-                [JDGAssetManager.shared asyncResolveAsset:self.asset size:config.imageSize deliveryMode:mode completion:^(NSArray<UIImage *> * _Nullable images, NSError * _Nullable error) {
+                [JDGAssetManager.shared asyncResolveAsset:self.asset size:config.imageSize deliveryMode:mode completion:^(UIImage * _Nullable image, NSDictionary * _Nullable info, NSError * _Nullable error) {
                     dispatch_main_async_jdg_safe(^{
-                        completion(images.firstObject, error);
+                        completion(image, info, error);
                     });
                 }];
             }
@@ -121,12 +135,12 @@
             if (self.localPath == nil) {
                 dispatch_main_async_jdg_safe(^{
                     error = [NSError errorWithDomain:config.errorDomain code:404 userInfo:@{NSLocalizedDescriptionKey:config.errorImageNotFound}];
-                    completion(nil, error);
+                    completion(nil, nil, error);
                 });
             } else {
                 UIImage *image = [UIImage imageWithContentsOfFile:self.localPath];
                 dispatch_main_async_jdg_safe(^{
-                    completion(image, error);
+                    completion(image, nil, error);
                 });
             }
         }
@@ -137,13 +151,13 @@
             if (self.remoteURL == nil) {
                 dispatch_main_async_jdg_safe(^{
                     error = [NSError errorWithDomain:config.errorDomain code:404 userInfo:@{NSLocalizedDescriptionKey:config.errorImageNotFound}];
-                    completion(nil, error);
+                    completion(nil, nil, error);
                 });
             } else {
                 NSData *imageData = [NSData dataWithContentsOfURL:self.remoteURL];
                 UIImage *image = [UIImage imageWithData:imageData];
                 dispatch_main_async_jdg_safe(^{
-                    completion(image, error);
+                    completion(image, nil, error);
                 });
             }
         }
@@ -152,7 +166,7 @@
         {
             dispatch_main_async_jdg_safe(^{
                 error = [NSError errorWithDomain:config.errorDomain code:404 userInfo:@{NSLocalizedDescriptionKey:config.errorImageNotFound}];
-                completion(nil, error);
+                completion(nil, nil, error);
             });
         }
             break;
@@ -167,5 +181,34 @@
     [self getImageInMainQueueForQuality:PHImageRequestOptionsDeliveryModeHighQualityFormat completion:completion];
 }
 
+- (NSURL *)localPreviewURL {
+    JDGImagePickerConfiguration *config = JDGImagePickerConfiguration.shared;
+    NSURL *url = nil;
+    if(self.type == JDGImagePickerPhotoTypeRemoteURL) {
+        NSData *imageData = [NSData dataWithContentsOfURL:self.remoteURL];
+        [self saveToDocument:imageData];
+    } else if(self.type == JDGImagePickerPhotoTypePHAsset) {
+        if (self.asset != nil) {
+            NSString *path = [self filePathInSandBoxForIdentifier:self.asset.localIdentifier];
+            if ([NSFileManager.defaultManager fileExistsAtPath:path]) {
+                url = [NSURL fileURLWithPath:path];
+            } else {
+                __block BOOL isFinish = NO;
+                [JDGAssetManager.shared asyncDetailResolveAsset:self.asset size:config.imageSize completion:^(UIImage * _Nullable image, NSDictionary * _Nullable info, NSError * _Nullable error) {
+                    [self saveToDocument:UIImageJPEGRepresentation(image, 1) identifier:self.asset.localIdentifier];
+                    isFinish = YES;
+                }];
+                while (!isFinish) {
+                    [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+                }
+            }
+        }
+    }
+
+    if(url == nil && self.type == JDGImagePickerPhotoTypeLocalFile) {
+        url = [NSURL fileURLWithPath:self.localPath];
+    }
+    return url;
+}
 
 @end

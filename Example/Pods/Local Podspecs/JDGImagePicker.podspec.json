@@ -18,12 +18,6 @@
   "platforms": {
     "ios": "11.0"
   },
-  "source_files": "JDGImagePicker/Classes/Base/**/*.{h,m}",
-  "resource_bundles": {
-    "JDGImagePickerResources": [
-      "JDGImagePicker/Assets/ImagePicker/*.{storyboard,xcassets}"
-    ]
-  },
   "frameworks": [
     "UIKit",
     "Photos",
@@ -31,12 +25,31 @@
   ],
   "subspecs": [
     {
+      "name": "Base",
+      "source_files": "JDGImagePicker/Classes/Base/**/*.{h,m}"
+    },
+    {
       "name": "ImagePicker",
-      "source_files": "JDGImagePicker/Classes/ImagePicker/**/*.{h,m}"
+      "source_files": "JDGImagePicker/Classes/ImagePicker/**/*.{h,m}",
+      "resource_bundles": {
+        "JDGImagePickerResources": [
+          "JDGImagePicker/Assets/ImagePicker/*.{storyboard,xcassets}"
+        ]
+      },
+      "dependencies": {
+        "JDGImagePicker/Base": [
+
+        ]
+      }
     },
     {
       "name": "ImagePreviewer",
-      "source_files": "JDGImagePicker/Classes/ImagePreviewer/**/*.{h,m}"
+      "source_files": "JDGImagePicker/Classes/ImagePreviewer/**/*.{h,m}",
+      "dependencies": {
+        "JDGImagePicker/Base": [
+
+        ]
+      }
     }
   ]
 }

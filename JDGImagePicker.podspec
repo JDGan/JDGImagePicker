@@ -29,18 +29,22 @@ Pod::Spec.new do |s|
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '11.0'
-
-  s.source_files = 'JDGImagePicker/Classes/Base/**/*.{h,m}'
+  
+  s.subspec 'Base' do |sub|
+      sub.source_files = 'JDGImagePicker/Classes/Base/**/*.{h,m}'
+  end
   
   s.subspec 'ImagePicker' do |sub|
       sub.source_files = 'JDGImagePicker/Classes/ImagePicker/**/*.{h,m}'
-      s.resource_bundles = {
+      sub.resource_bundles = {
         'JDGImagePickerResources' => ['JDGImagePicker/Assets/ImagePicker/*.{storyboard,xcassets}']
       }
+      sub.dependency 'JDGImagePicker/Base'
   end
   
   s.subspec 'ImagePreviewer' do |sub|
       sub.source_files = 'JDGImagePicker/Classes/ImagePreviewer/**/*.{h,m}'
+      sub.dependency 'JDGImagePicker/Base'
   end
   
   s.frameworks = 'UIKit', 'Photos', 'AVFoundation'

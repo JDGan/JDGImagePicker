@@ -9,12 +9,13 @@
 #define JDGImagePickerDefines_h
 
 @class PHAsset, AVCaptureDevice;
+@class JDGImagePickerPhoto;
 
 typedef void(^JDGVoidBlock)(void);
 
 typedef void(^JDGAssetResultBlock)(NSArray<PHAsset *> * _Nullable assets, NSError * _Nullable error);
 typedef void(^JDGImagesResultBlock)(NSArray<UIImage *> * _Nullable images, NSError * _Nullable error);
-typedef void(^JDGImageResultBlock)(UIImage * _Nullable image, NSError * _Nullable error);
+typedef void(^JDGImageResultBlock)(UIImage * _Nullable image, NSDictionary * _Nullable info, NSError * _Nullable error);
 
 typedef void(^JDGLockInputDeviceBlock)(AVCaptureDevice * _Nonnull device);
 typedef BOOL(^JDGCheckIsInputDeviceSupportBlock)(AVCaptureDevice * _Nonnull device);
@@ -22,7 +23,7 @@ typedef BOOL(^JDGCheckIsInputDeviceSupportBlock)(AVCaptureDevice * _Nonnull devi
 typedef void(^JDGCompletionBlock)(BOOL success, id _Nullable data, NSError * _Nullable error);
 typedef void(^JDGAnimationBlock)(UIView * _Nonnull fromView, UIView * _Nonnull toView);
 typedef void(^JDGAnimationCompleteBlock)(BOOL isFinished);
-
+typedef UIViewController *_Nonnull(^JDGImageShouldShowPreviewerBlock)(NSArray <JDGImagePickerPhoto *>* _Nonnull photos, NSUInteger indexToShow);
 
 #ifndef dispatch_main_async_jdg_safe
 #define dispatch_main_async_jdg_safe(block)\
@@ -36,7 +37,7 @@ typedef void(^JDGAnimationCompleteBlock)(BOOL isFinished);
 @protocol JDGStoryBoardControllerProtocol <NSObject>
 /// 一定要在类中实现该方法,才能通过create创建控制器,默认使用ImagePicker中的storyboard
 + (UIStoryboard * _Nullable)getStoryboard;
-/// 使用create方法创建storyboard中的控制器
+/// 使用create方法创建storyboard中的控制器,identifier与类名相同即可
 + (_Nullable instancetype)create;
 
 @end

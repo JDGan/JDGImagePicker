@@ -24,7 +24,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)asyncResolveAsset:(PHAsset *)asset
                      size:(CGSize)size
              deliveryMode:(PHImageRequestOptionsDeliveryMode)mode
-               completion:(JDGImagesResultBlock)completion;
+               completion:(JDGImageResultBlock)completion;
+
+- (void)asyncDetailResolveAsset:(PHAsset *)asset
+                           size:(CGSize)size
+                     completion:(JDGImageResultBlock)completion;
 
 - (NSArray<UIImage *> *)resolveAssets:(NSArray<PHAsset *> *)assets;
 

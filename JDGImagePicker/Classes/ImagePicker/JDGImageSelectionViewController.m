@@ -8,8 +8,14 @@
 #import "JDGImageSelectionViewController.h"
 #import "JDGImageSelectionItemCell.h"
 #import "JDGImagePicker.h"
+#import <QuickLook/QuickLook.h>
 
-@interface JDGImageSelectionViewController () <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource>
+@interface JDGImageSelectionViewController ()
+<UICollectionViewDelegateFlowLayout
+,UICollectionViewDataSource
+,QLPreviewControllerDataSource
+,QLPreviewControllerDelegate
+>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
@@ -57,9 +63,9 @@
     }
 }
 
-- (JDGImagePickerPhoto *)itemForIndexPath:(NSIndexPath *)indexPath {
+- (JDGImagePickerPhoto *)itemForIndex:(NSUInteger)index {
     NSUInteger count = JDGImagePicker.shared.photoStack.selectedPhotos.count;
-    return JDGImagePicker.shared.photoStack.selectedPhotos[count - indexPath.row - 1];
+    return JDGImagePicker.shared.photoStack.selectedPhotos[count - index - 1];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -76,7 +82,7 @@
 
 - (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)aCell forItemAtIndexPath:(NSIndexPath *)indexPath {
     JDGImageSelectionItemCell *cell = (JDGImageSelectionItemCell *)aCell;
-    JDGImagePickerPhoto *itemData = [self itemForIndexPath:indexPath];
+    JDGImagePickerPhoto *itemData = [self itemForIndex:indexPath.row];
     [cell customizeWithData:itemData];
     cell.deleteBlock = ^(id _Nullable data) {
         if(![data isKindOfClass:[JDGImagePickerPhoto class]]) {return;}
@@ -101,13 +107,22 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-//    JDGImagePickerPhoto *photo = [self itemForIndexPath:indexPath];
-    
+    JDGImagePicker *picker = JDGImagePicker.shared;
+    if(picker.previewerBlock) {
+        UIViewController *vc = JDGImagePicker.shared.previewerBlock([[picker.photoStack.selectedPhotos reverseObjectEnumerator] allObjects], indexPath.row);
+        [self.navigationController pushViewController:vc animated:YES];
+    } else {
+        QLPreviewController *ql = [[QLPreviewController alloc] init];
+        ql.delegate = self;
+        ql.dataSource = self;
+        ql.currentPreviewItemIndex = indexPath.row;
+        [self.navigationController pushViewController:ql animated:YES];
+    }
 }
 
 - (void)collectionView:(UICollectionView *)collectionView moveItemAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
-    JDGImagePickerPhoto *sourcePhoto = [self itemForIndexPath:sourceIndexPath];
-    JDGImagePickerPhoto *destinationPhoto = [self itemForIndexPath:destinationIndexPath];
+    JDGImagePickerPhoto *sourcePhoto = [self itemForIndex:sourceIndexPath.row];
+    JDGImagePickerPhoto *destinationPhoto = [self itemForIndex:destinationIndexPath.row];
     [JDGImagePicker.shared.photoStack insertItem:sourcePhoto beforeDestination:destinationPhoto];
 }
 
@@ -139,5 +154,17 @@
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskPortrait;
 }
+
+#pragma mark - QLPreviewControllerDataSource
+- (id<QLPreviewItem>)previewController:(QLPreviewController *)controller previewItemAtIndex:(NSInteger)index {
+    JDGImagePickerPhoto *p = [self itemForIndex:index];
+    return p.localPreviewURL;
+}
+
+- (NSInteger)numberOfPreviewItemsInPreviewController:(nonnull QLPreviewController *)controller {
+    return JDGImagePicker.shared.photoStack.selectedPhotos.count;
+}
+
+#pragma mark - QLPreviewControllerDelegate
 
 @end
